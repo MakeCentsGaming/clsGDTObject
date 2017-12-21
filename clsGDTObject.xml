@@ -1,0 +1,289 @@
+<doc>
+<member name="T:MakeCents.GDT">
+<summary>
+<para>Creates an object including lists of GDF objects</para>
+<para>//Includes ability to report progress</para>
+<para>
+GDF object includes all asset information including which gdt it came from
+</para>
+</summary>
+</member>
+<member name="M:MakeCents.GDT.#ctor">
+<summary>Override to initialize gdfs as new list</summary>
+</member>
+<member name="M:MakeCents.GDT.SplitGDT(System.String,System.Int32)">
+<summary>Splits a gdt into GDFs, assigned to GDT.gdfs</summary>
+<param name="fileName">The full path to the gdt</param>
+<param name="fcount">
+The number of files that will equal 90 percent of the effort
+</param>
+</member>
+<member name="M:MakeCents.GDT.GetStringFromFile(System.String)">
+<summary>Error handling for getting all text from file</summary>
+<param name="fileName">Full name of a gdt file</param>
+<returns/>
+</member>
+<member name="M:MakeCents.GDT.SeperateGDT(System.Text.StringBuilder,System.String,System.String)">
+<summary>
+Splits the split again but by } and determines to start over the stringbuilder or to continue it
+</summary>
+<param name="sb">The current gdfs stringbuilder</param>
+<param name="i">the line in the gdf</param>
+<param name="fileName">The name of the gdt to add to the gdf property</param>
+</member>
+<member name="M:MakeCents.GDT.GoodSyntaxCount(System.String)">
+<summary>
+Checks if the syntax could be correct by counting opening, closing, and quotes
+</summary>
+</member>
+<member name="M:MakeCents.GDT.ModifyValueForKeyForEach(System.String,System.String,System.Boolean)">
+<summary>
+<para>ModifyValueForKeyForEach(key, value, [add]);</para>
+<para>
+Update the value for a kvp or add it if it doesn't exists
+</para>
+</summary>
+<param name="key">The key to update the value for</param>
+<param name="nvalue">The new value for this key</param>
+<param name="add">[Optional]Add kvp if it don't exist</param>
+</member>
+<member name="M:MakeCents.GDT.InsertValueForEach(System.String,System.String,System.String,System.String)">
+<summary>Edit a value for a specific key in all assets</summary>
+<param name="key">Key to replace value for</param>
+<param name="start">Keep up to and including this part of the value</param>
+<param name="end">The part of the string to keep at the end</param>
+<param name="add">
+[Optional] Add this in between to add to the string, nothing will just remove it
+</param>
+</member>
+<member name="M:MakeCents.GDT.ReplaceEachValue(System.String,System.String,System.String)">
+<summary>
+Replace a value for a specific string for each asset
+</summary>
+<param name="key">The key to replace the value string for</param>
+<param name="replace">What you want to replace</param>
+<param name="replacewith">What you will replace it with if it exists</param>
+</member>
+<member name="M:MakeCents.GDT.AddPrefixToEachName(System.String,System.Boolean)">
+<summary>Add a prefix to each asset in the list of assets</summary>
+<param name="prefix">The prefix to add to the name</param>
+<param name="duplicate">
+If the prefix is on the name do you want to add it again? True prevents accidental duplicates but keeps adding prefix
+</param>
+</member>
+<member name="M:MakeCents.GDT.AddSuffixToEachName(System.String,System.Boolean)">
+<summary>Add a prefix to each asset in the list of assets</summary>
+<param name="suffix">The prefix to add to the name</param>
+<param name="duplicate">
+If the prefix is on the name do you want to add it again? True prevents accidental duplicates but keeps adding suffix
+</param>
+</member>
+<member name="M:MakeCents.GDT.GetAssetsOfType(System.String)">
+<summary>var x = GetAssetsOfType("material.gdf");</summary>
+<param name="type">
+[Optional] The type of asset list to return, includes .gdf on the end or it wll add it
+</param>
+<returns>IEnumberable of clsGDFObject</returns>
+</member>
+<member name="M:MakeCents.GDT.GetGDT(System.String,System.Boolean)">
+<summary>Get the entire gdt for a specific name</summary>
+<param name="mygdt">The gdt you added to read</param>
+<param name="duplicates">[Optional] include duplicates or not</param>
+<returns>String of entire GDT complete formatted</returns>
+</member>
+<member name="M:MakeCents.GDT.CollectGDT(System.Collections.Generic.IEnumerable{MakeCents.GDF},System.Boolean)">
+<summary>Gathers one gdt together</summary>
+<param name="mygdfs">An IEnumerable of GDF objects</param>
+<param name="duplicates">Include duplicates or not</param>
+<returns/>
+</member>
+<member name="M:MakeCents.GDT.GetCombinedGDT(System.Boolean)">
+<summary>Combines all gdts into one gdt string</summary>
+<param name="duplicates">[Optional] include duplicates or not</param>
+<returns/>
+</member>
+<member name="T:MakeCents.GDF">
+<summary>
+<para>
+GDF object includes all asset information including which gdt it came from
+</para>
+</summary>
+</member>
+<member name="P:MakeCents.GDF.Type">
+<summary>
+Type is the name of the gdt, material, xmodel... etc
+</summary>
+</member>
+<member name="P:MakeCents.GDF.Name">
+<summary>Name is the name of the asset</summary>
+</member>
+<member name="F:MakeCents.GDF.inherited">
+<summary>If it is inherited or not</summary>
+</member>
+<member name="P:MakeCents.GDF.Kvps">
+<summary>The key value pairs in this gdf</summary>
+</member>
+<member name="P:MakeCents.GDF.Kvporder">
+<summary>The order of kvps in this gdf</summary>
+</member>
+<member name="P:MakeCents.GDF.gdt">
+<summary>The path of the gdt</summary>
+</member>
+<member name="M:MakeCents.GDF.GatherGDFS(System.String,System.String)">
+<summary>
+Takes a gdf, from the starting "name" to the ending } and creates a dictionary of kvps, name, and type as well as tracks order with a list Requires a good gdt to be passsed
+</summary>
+<param name="gdf">String from "name" to }</param>
+<param name="gdt">Name of this gdfs gdt for gathering later</param>
+</member>
+<member name="M:MakeCents.GDF.GoodLine(System.String)">
+<summary>
+Returns if the line is ok to split by " and has a key and value
+</summary>
+<param name="v">The line to split</param>
+<returns>
+if the line is good to split and read the 3rd index
+</returns>
+</member>
+<member name="M:MakeCents.GDF.GetNameAndType">
+<summary>Get the name of a asset</summary>
+<returns>A formatted asset name</returns>
+</member>
+<member name="M:MakeCents.GDF.ModifyValueForKey(System.String,System.String,System.Boolean)">
+<summary>
+<para>gdf.ModifyValueForKey(key, value, [add]);</para>
+<para>
+Update the value for a kvp or add it if it doesn't exists
+</para>
+</summary>
+<param name="key">The key to update the value for</param>
+<param name="nvalue">The new value for this key</param>
+<param name="add">[Optional]Add kvp if it don't exist</param>
+</member>
+<member name="M:MakeCents.GDF.UpdateValueFor(System.String,System.String,System.Boolean,System.Boolean)">
+<summary>
+<para>gdf.UpdateValueFor(key, value, false);</para>
+<para>
+Update a value for a key, but only if the value is nothing, unless onlyifempty == true
+</para>
+</summary>
+<param name="key">the key to update the value for</param>
+<param name="value">The new value for the key</param>
+<param name="onlyifempty">[Optional] Only update for keys that value == ""</param>
+<param name="addifmissing">[Optional] Add kvps that do not exist</param>
+</member>
+<member name="M:MakeCents.GDF.GetAllKVPs">
+<summary>Get the body of an asset, or all the kvps</summary>
+<returns>All kvps in a nice string format</returns>
+</member>
+<member name="M:MakeCents.GDF.GetAsset">
+<summary>Get the entire asset/gdf</summary>
+<returns>The asset complete formatted</returns>
+</member>
+<member name="M:MakeCents.GDF.GetValueForKey(System.String)">
+<summary>Get the value of a key</summary>
+<param name="key">key to look up in this asset</param>
+<returns>
+the value for a kvp or null if the key does not exist
+</returns>
+</member>
+<member name="M:MakeCents.GDF.AddPrefixToName(System.String,System.Boolean)">
+<summary>
+Adds a prefix to the name and if inherited adds to the inheritied name
+</summary>
+<param name="prefix">String to add as prefix</param>
+<param name="duplicate">
+If it is already prefixed, do you want to duplicate it?
+</param>
+</member>
+<member name="M:MakeCents.GDF.AddSuffixToName(System.String,System.Boolean)">
+<summary>
+Adds a suffix to the name and if inherited adds to the inheritied name
+</summary>
+<param name="suffix">String to add as suffix</param>
+<param name="duplicate">
+If it is already prefixed, do you want to duplicate it?
+</param>
+</member>
+<member name="M:MakeCents.GDF.ReplaceValue(System.String,System.String,System.String)">
+<summary>Replace instances of a string for a specific key</summary>
+<param name="key">The key to replace the value string for</param>
+<param name="replace">What you want to replace</param>
+<param name="replacewith">What you will replace it with if it exists</param>
+</member>
+<member name="M:MakeCents.GDF.EditValue(System.String,System.String,System.String,System.String)">
+<summary>
+Edit values for specific keys based on start and ending.
+</summary>
+<param name="key">Key to replace value for</param>
+<param name="start">Keep up to and including this part of the value</param>
+<param name="end">The part of the string to keep at the end</param>
+<param name="add">
+[Optional] Add this in between to add to the string, nothing will just remove it
+</param>
+</member>
+<member name="T:MakeCents.GDTUtil">
+<summary>
+Static utilities for common things like formatting strings and renaming assets
+</summary>
+</member>
+<member name="M:MakeCents.GDTUtil.KVP(System.String,System.String)">
+<summary>formats for kvp</summary>
+<param name="key">the key for the attribute</param>
+<param name="value">the value for the attribute</param>
+<returns/>
+</member>
+<member name="M:MakeCents.GDTUtil.AssetNameAndType(MakeCents.GDF)">
+<summary>Pass a gdf object to get name and type string</summary>
+<param name="g">GDF object</param>
+<returns/>
+</member>
+<member name="M:MakeCents.GDTUtil.AssetNameAndType(System.String,System.String,System.Boolean)">
+<summary>formats for name and type of gdf</summary>
+<param name="name">The name of the asset/gdf</param>
+<param name="type">The type of asset, such as material.gdf</param>
+<param name="inherited">
+[Optional] If this asset inherits from another asset
+</param>
+<returns/>
+</member>
+<member name="M:MakeCents.GDTUtil.Inherited(System.String,System.String)">
+<summary>Formats an inherted asset</summary>
+<param name="name"/>
+<param name="type"/>
+<returns/>
+</member>
+<member name="M:MakeCents.GDTUtil.AddPrefixToName(MakeCents.GDF,System.String,System.Boolean)">
+<summary>
+Adds a prefix to the name and if inherited adds to the inheritied name
+</summary>
+<param name="gdf">GDF object</param>
+<param name="prefix">String to add as prefix</param>
+<param name="duplicate">
+If it is already prefixed, do you want to duplicate it?
+</param>
+</member>
+<member name="M:MakeCents.GDTUtil.AddToNameOrType(System.Boolean,System.Boolean,System.String,System.String,System.String)">
+<summary>returns modified name with prefix and or suffix</summary>
+<param name="v">
+Where or not the prefix or suffix is already on the name
+</param>
+<param name="duplicate">
+If you want to duplicate even if it is already on the name
+</param>
+<param name="name">The core name to add prefix or suffix to</param>
+<param name="prefix">What to add to the beginning of the name</param>
+<param name="suffix">What to add to the end of the name</param>
+<returns/>
+</member>
+<member name="M:MakeCents.GDTUtil.AddSuffixToName(MakeCents.GDF,System.String,System.Boolean)">
+<summary>
+Adds a suffix to the name and if inherited adds to the inheritied name
+</summary>
+<param name="gdf">GDF object</param>
+<param name="suffix">String to add as suffix</param>
+<param name="duplicate">
+If it is already prefixed, do you want to duplicate it?
+</param>
+</member>
+</doc>
