@@ -7,6 +7,7 @@ GDT gdt = new GDT();
 //optional actions
 
 gdt.ProgressBar += progressbar;
+
 gdt.MessageBar += messagebox;
 
 //Either do one gdt:
