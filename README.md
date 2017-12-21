@@ -14,8 +14,11 @@ This is a gdt parser that creates and object out of a gdt, or list of gdts, whic
 
 ##### Or pass a list of gdts
 - gdt.ReadEachGDT(List<string>); //list of full gdt paths
+  
+- gdt.gdfs is a list of GDF objects, or assets with a dictionary of keys and other asset related properties.
 
 ##### See xml for full list of functions
+
 
 
 This is a work in progress and will be updated as I find more things I need to do to gdts.
